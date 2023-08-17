@@ -26,7 +26,7 @@ app.get('/images/progan', (req, res) => {
     res.json(getImages(['ffhq', 'progan']));
 });
 
-function getImages(imageSets: string[]) {
+function getImages(imageSets: string[]): Image[] {
     let selectedImages: Image[] = [];
     // Ensure at least one image from each set
     for (let set of imageSets) {
