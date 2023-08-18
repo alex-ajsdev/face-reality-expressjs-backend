@@ -98,7 +98,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "",
@@ -113,6 +114,7 @@
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.0.1",
+    "prettier": "^3.0.2",
     "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.1.6"
