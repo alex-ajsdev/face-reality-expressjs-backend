@@ -29,5 +29,5 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > deploy_key
         chmod 600 deploy_key
-        rsync -avz -e "ssh -i deploy_key -o StrictHostKeyChecking=no" dist/ $USER@$HOST:$TARGET
+        rsync -avz -e "ssh -i deploy_key -o StrictHostKeyChecking=no" ./ $USER@$HOST:$TARGET
         ssh -i deploy_key $USER@$HOST "rsync -avz $TARGET $APP_DIR && cd $APP_DIR && npm install && pm2 restart face-reality-api"
