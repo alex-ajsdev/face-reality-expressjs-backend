@@ -1,8 +1,9 @@
 import app from './app';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import path from 'path';
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 
