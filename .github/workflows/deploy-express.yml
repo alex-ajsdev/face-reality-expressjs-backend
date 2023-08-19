@@ -1,0 +1,32 @@
+name: Deploy Express Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build the application
+      run: npm run build
+
+    - name: Deploy to server
+      env:
+        PRIVATE_KEY: ${{ secrets.EXPRESS_DEPLOY_PRIVATE_KEY }}
+        HOST: 103.241.64.253
+        USER: root
+        TARGET: ~/apps/face-reality-api/
+      run: |
+        echo "$PRIVATE_KEY" > deploy_key
+        chmod 600 deploy_key
+        rsync -avz -e "ssh -i deploy_key -o StrictHostKeyChecking=no" --delete . $USER@$HOST:$TARGET
+        ssh -i deploy_key $USER@$HOST "cd $TARGET && npm install && pm2 restart face-reality-api"
