@@ -10,7 +10,7 @@ app.use(express.json()); // Use Express's built-in JSON parser
 app.use(cors());
 
 // Routes
-app.use(`/img`, express.static('img'));
+app.use(`/img`, express.static('../img'));
 app.use('/images', imageRoutes);
 app.use('/selections', selectionRoutes);
 
