@@ -28,6 +28,9 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > deploy_key
         chmod 600 deploy_key
-        rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" ./ $USER@$HOST:$APP_DIR
+        
+        # Use rsync to deploy the application excluding the .env and img folders
+        rsync -avz --delete --exclude '.env' --exclude 'img/' -e "ssh -i deploy_key -o StrictHostKeyChecking=no" ./ $USER@$HOST:$APP_DIR
+        
+        # SSH into the server and restart the application
         ssh -i deploy_key $USER@$HOST "source ~/.nvm/nvm.sh && nvm use 18 && cd $APP_DIR && npm install && pm2 restart face-reality-api"
-    
