@@ -4,18 +4,14 @@ import { getImages } from '../utils/fsOperations';
 function handleResponse(req: Request, res: Response, sets: string[]) {
   try {
     const images = getImages(sets);
-    res.json({ success: true, data: images });
+    res.json(images);
   } catch (error) {
     if (error instanceof Error) {
       console.error('Error fetching images:', error.message);
-      res
-        .status(500)
-        .json({ success: false, message: 'Internal Server Error' });
+      res.status(500).json({ message: 'Internal Server Error' });
     } else {
       console.error('Unknown error:', error);
-      res
-        .status(500)
-        .json({ success: false, message: 'Internal Server Error' });
+      res.status(500).json({ message: 'Internal Server Error' });
     }
   }
 }
