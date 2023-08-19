@@ -24,9 +24,10 @@ jobs:
         PRIVATE_KEY: ${{ secrets.EXPRESS_DEPLOY_PRIVATE_KEY }}
         HOST: 103.241.64.253
         USER: root
-        TARGET: ~/apps/face-reality-api/
+        TARGET: ~/apps/face-reality-api-build/
+        APP_DIR: ~/apps/face-reality-api/
       run: |
         echo "$PRIVATE_KEY" > deploy_key
         chmod 600 deploy_key
-        rsync -avz -e "ssh -i deploy_key -o StrictHostKeyChecking=no" --delete dist/ $USER@$HOST:$TARGET
-        ssh -i deploy_key $USER@$HOST "cd $TARGET && npm install && pm2 restart face-reality-api"
+        rsync -avz -e "ssh -i deploy_key -o StrictHostKeyChecking=no" dist/ $USER@$HOST:$TARGET
+        ssh -i deploy_key $USER@$HOST "rsync -avz $TARGET $APP_DIR && cd $APP_DIR && npm install && pm2 restart face-reality-api"
